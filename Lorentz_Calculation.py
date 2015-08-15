@@ -20,17 +20,21 @@ except ValueError:
     try:
         float(speed)
     except ValueError:
-        quit("This is not a number.")
-
+        exit = raw_input("This is not a number.  Press Enter to exit.")
+	exit == quit()
+		
 velocity = decimal.Decimal(speed)
 
 # This verifies that the number entered is valid
 if velocity > c:
-	quit("You are moving faster than light! This is impossible.")
+	exit = raw_input("You are moving faster than light! This is impossible.  Press Enter.")
+	exit == quit()
 elif velocity == c:
-	quit("You are travelling at exactly the speed of light, this is not allowed.")
+	exit = raw_input("You are travelling at exactly the speed of light, this is not allowed.  Press Enter.")
+	exit == quit()
 elif velocity <= 0:
-	quit("You need to be in motion. Try again!")
+	exit = raw_input("You need to be in motion. Try again!")
+	exit == quit()
 else:
 	print "Ok"
 
@@ -45,21 +49,25 @@ except ValueError:
     try:
         float(weight)
     except ValueError:
-        quit("This is not a number.")
+        exit = raw_input("This is not a number.  Press Enter to exit.")
+	exit == quit()
 
 mass = decimal.Decimal(weight)
 
 # This verifies that the number entered is valid
 if mass <= 0:
-	quit("You should weigh something. Try again!")
+	exit = raw_input("You should weigh something. Press Enter.")
+	exit == quit()
 elif mass > 500:
 	answer1 = raw_input("Are you sure you weigh that much? ").lower()
 	if answer1 == "yes" or answer1 == "y":
 		print "Ok"
 	elif answer1 == "no" or answer1 == "n":
-		quit("I thought so.")
+		exit = raw_input("I thought so.  Press Enter.")
+		exit == quit()
 	else:
-		quit("Unrecognized input.")
+		exit = raw_input("Unrecognized input.  Press Enter.")
+		exit == quit()
 else:
 	print "Ok"
 
@@ -74,21 +82,25 @@ except ValueError:
     try:
         float(height)
     except ValueError:
-        quit("This is not a number.")
+        exit = raw_input("This is not a number.  Press Enter to exit.")
+	exit == quit()
 
 length = decimal.Decimal(height)
 
 # This verifies that the number entered is valid
 if length <= 0:
-	quit("You should be taller than 0 inches.")
+	exit = raw_input("You should be taller than 0 inches.  Press Enter.")
+	exit == quit()
 elif length > 100:
 	answer2 = raw_input("Are you sure you are that tall? ").lower()
 	if answer2 == "yes" or answer2 == "y":
 		print "Ok"
 	elif answer2 == "no" or answer2 == "n":
-		quit("Try again then.")
+		exit = raw_input("Try again then.  Press Enter.")
+		exit == quit()
 	else:
-		quit("Unrecognized input.")
+		exit = raw_input("Unrecognized input.  Press Enter.")
+		exit == quit()
 else:
 	print "Ok"
 
@@ -97,7 +109,8 @@ gamma = decimal.Decimal(1 / (math.sqrt(1 - ((velocity / c) ** 2))))
 
 # This verifies that there are changes to report
 if (mass * gamma) == mass and (length / gamma) == length and (1 * gamma) == 1:
-	quit("You're not moving fast enough to display changes.  Try again with a higher value.")
+	exit = raw_input("You're not moving fast enough to display changes.  Try again with a higher value.  Press Enter.")
+	exit == quit()
 else:
 
 # This displays the results
