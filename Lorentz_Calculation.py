@@ -14,24 +14,14 @@ unit_velocity = raw_input("""Select the unit to be used for speed:
 (3) Fraction of the speed of light (ex.: 0.85c)
 > """)
 
-# This is to make sure a number was entered
-try:
-    int(unit_velocity)
-except ValueError:
-    try:
-        float(unit_velocity)
-    except ValueError:
-        exit = raw_input("This is not a number.  Press Enter.")
-	exit == quit()
-
 # This checks which unit was selected and sets c accordingly
-if int(unit_velocity) == 1:
+if str(unit_velocity) == "1":
 	unit_velocity = "km/h"
 	c = decimal.Decimal(1079252848800)
-elif int(unit_velocity) == 2:
+elif str(unit_velocity) == "2":
 	unit_velocity = "mph"
 	c = decimal.Decimal(670616629)
-elif int(unit_velocity) == 3:
+elif str(unit_velocity) == "3":
 	unit_velocity = "c"
 	c = decimal.Decimal(1)
 else:
@@ -41,7 +31,7 @@ else:
 	
 # This is where the user inputs the value for the velocity
 print "Enter your speed in %s (the speed of light in a vacuum is %s %s): " % (unit_velocity, c, unit_velocity)
-speed = raw_input()
+speed = decimal.Decimal(raw_input())
 
 # This is to make sure a number was entered
 try:
