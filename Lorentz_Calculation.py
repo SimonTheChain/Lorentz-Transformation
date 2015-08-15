@@ -11,7 +11,7 @@ c = decimal.Decimal(1079252848800)
 
 
 # This is where the user inputs the value for the velocity
-speed = raw_input("Enter your speed in km/h: ")
+speed = raw_input("Enter your speed in km/h (the speed of light in a vacuum is 1079252848800 kmh/h): ")
 
 # This is to make sure a number was entered
 try:
@@ -20,7 +20,7 @@ except ValueError:
     try:
         float(speed)
     except ValueError:
-        exit = raw_input("This is not a number.  Press Enter to exit.")
+        exit = raw_input("This is not a number.  Press Enter.")
 	exit == quit()
 		
 velocity = decimal.Decimal(speed)
@@ -33,7 +33,7 @@ elif velocity == c:
 	exit = raw_input("You are travelling at exactly the speed of light, this is not allowed.  Press Enter.")
 	exit == quit()
 elif velocity <= 0:
-	exit = raw_input("You need to be in motion. Try again!")
+	exit = raw_input("You need to be in foward motion. Press Enter.")
 	exit == quit()
 else:
 	print "Ok"
@@ -49,7 +49,7 @@ except ValueError:
     try:
         float(weight)
     except ValueError:
-        exit = raw_input("This is not a number.  Press Enter to exit.")
+        exit = raw_input("This is not a number.  Press Enter.")
 	exit == quit()
 
 mass = decimal.Decimal(weight)
@@ -82,7 +82,7 @@ except ValueError:
     try:
         float(height)
     except ValueError:
-        exit = raw_input("This is not a number.  Press Enter to exit.")
+        exit = raw_input("This is not a number.  Press Enter.")
 	exit == quit()
 
 length = decimal.Decimal(height)
