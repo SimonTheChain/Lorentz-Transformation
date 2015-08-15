@@ -6,12 +6,42 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 import math
 import decimal
 
-# This is the speed of light in a vacuum in km/h
-c = decimal.Decimal(1079252848800)
 
+# This is where the user selects the units to be used
+unit_velocity = raw_input("""Select the unit to be used for speed:
+(1) Kilometers per hour (km/h)
+(2) Miles per hour (mph)
+(3) Fraction of the speed of light (ex.: 0.85c)
+> """)
 
+# This is to make sure a number was entered
+try:
+    int(unit_velocity)
+except ValueError:
+    try:
+        float(unit_velocity)
+    except ValueError:
+        exit = raw_input("This is not a number.  Press Enter.")
+	exit == quit()
+
+# This checks which unit was selected and sets c accordingly
+if int(unit_velocity) == 1:
+	unit_velocity = "km/h"
+	c = decimal.Decimal(1079252848800)
+elif int(unit_velocity) == 2:
+	unit_velocity = "mph"
+	c = decimal.Decimal(670616629)
+elif int(unit_velocity) == 3:
+	unit_velocity = "c"
+	c = decimal.Decimal(1)
+else:
+	exit = raw_input("Expected 1, 2 or 3.  Press Enter.")
+	exit == quit()
+
+	
 # This is where the user inputs the value for the velocity
-speed = raw_input("Enter your speed in km/h (the speed of light in a vacuum is 1079252848800 kmh/h): ")
+print "Enter your speed in %s (the speed of light in a vacuum is %s %s): " % (unit_velocity, c, unit_velocity)
+speed = raw_input()
 
 # This is to make sure a number was entered
 try:
