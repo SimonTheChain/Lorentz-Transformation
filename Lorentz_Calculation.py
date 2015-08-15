@@ -65,3 +65,6 @@ Your mass is now %s lbs;
 If you travel lying down in the direction of movement, to someone not moving your height is now %s inches;
 1 year to you is %s years to someone not moving.
 """ % ((weight * gamma), (height / gamma), (1 * gamma))
+
+# This is to make sure the user has time to read
+quit(raw_input("Press Enter to exit program."))
