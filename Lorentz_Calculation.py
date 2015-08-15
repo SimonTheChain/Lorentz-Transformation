@@ -20,7 +20,7 @@ c = 1079252848800.0
 gamma = 1.0 / (math.sqrt(1.0 - ((v / c) ** 2)))
 
 #This displays the results
-print """It means that:
+print """According to the Theory of Special Relativity:
 Your mass is now %s lbs;
 If you travel lying down in the direction of movement, to someone not moving your height is now %s inches;
 1 year to you is %s years to someone not moving.""" % ((mass * gamma), (length / gamma), (1 * gamma))
