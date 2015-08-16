@@ -31,7 +31,7 @@ else:
 	
 # This is where the user inputs the value for the velocity
 print "Enter your speed in %s (the speed of light in a vacuum is %s %s): " % (unit_velocity, c, unit_velocity)
-speed = decimal.Decimal(raw_input())
+speed = raw_input("> ")
 
 # This is to make sure a number was entered
 try:
@@ -124,8 +124,9 @@ elif length > 100:
 else:
 	print "Ok"
 
+	
 # This is to calculate the Lorentz factor
-gamma = decimal.Decimal(1 / (math.sqrt(1 - ((velocity / c) ** 2))))
+gamma = decimal.Decimal(1 / decimal.Decimal(math.sqrt(1 - ((velocity / c) ** 2))))
 
 # This verifies that there are changes to report
 if (mass * gamma) == mass and (length / gamma) == length and (1 * gamma) == 1:
