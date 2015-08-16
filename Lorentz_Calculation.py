@@ -6,6 +6,17 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 import math
 import decimal
 
+# This is to make sure a number was entered
+def number_check(x):
+	try:
+		int(x)
+	except ValueError:
+		try:
+			float(x)
+		except ValueError:
+			exit = raw_input("This is not a number.  Press Enter.")
+		exit == quit()
+		
 
 # This is where the user selects the units to be used
 unit_velocity = raw_input("""Select the unit to be used for speed:
@@ -33,16 +44,8 @@ else:
 print "Enter your speed in %s (the speed of light in a vacuum is %s %s): " % (unit_velocity, c, unit_velocity)
 speed = raw_input("> ")
 
-# This is to make sure a number was entered
-try:
-    int(speed)
-except ValueError:
-    try:
-        float(speed)
-    except ValueError:
-        exit = raw_input("This is not a number.  Press Enter.")
-	exit == quit()
-		
+number_check(speed)
+
 velocity = decimal.Decimal(speed)
 
 # This verifies that the number entered is valid
@@ -62,15 +65,7 @@ else:
 # This is where the user inputs the value for the mass	
 weight = raw_input("Enter your mass (let's approximate to your weight, in lbs): ")
 
-# This is to make sure a number was entered
-try:
-    int(weight)
-except ValueError:
-    try:
-        float(weight)
-    except ValueError:
-        exit = raw_input("This is not a number.  Press Enter.")
-	exit == quit()
+number_check(weight)
 
 mass = decimal.Decimal(weight)
 
@@ -95,15 +90,7 @@ else:
 # This is where the user inputs the value for the length
 height = raw_input("Enter your height in inches: ")
 
-# This is to make sure a number was entered
-try:
-    int(height)
-except ValueError:
-    try:
-        float(height)
-    except ValueError:
-        exit = raw_input("This is not a number.  Press Enter.")
-	exit == quit()
+number_check(height)
 
 length = decimal.Decimal(height)
 
