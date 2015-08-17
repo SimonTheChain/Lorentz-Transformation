@@ -20,7 +20,7 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 			try:
 				float(x)
 			except ValueError:
-				print "This is not a number.  Try again."
+				print "This is not a number.  Try again.\n"
 				global num_check
 				num_check = False
 
@@ -28,13 +28,10 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 # This is where the user selects the units to be used
 	question1 = True
 	while question1 == True:
-		print """Select the unit to be used for speed:
+		unit_velocity = raw_input("""Select the unit to be used for speed:
 (1) Kilometers per hour (km/h)
 (2) Miles per hour (mph)
-(3) Fraction of the speed of light (ex.: 0.85c)"""
-		unit_velocity = raw_input("> ")
-
-# This checks which unit was selected and sets c accordingly
+(3) Fraction of the speed of light (ex.: 0.85c)\n> """)
 		if str(unit_velocity) == "1":
 			unit_velocity = "km/h"
 			c = Decimal(1079252848800)
@@ -48,17 +45,7 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 			c = Decimal(1)
 			question1 = False
 		else:
-			subquestion1 = True
-			while subquestion1 == True:
-				print "Expected 1, 2 or 3.  Try again? (y/n)"
-				question1_answer = raw_input("> ").lower()
-				if question1_answer[:1] == "y":
-					print "Ok"
-					subquestion1 = False
-				elif question1_answer[:1] == "n":
-					quit()
-				else:
-					print "Input unrecognized, try again."
+			print "Expected 1, 2 or 3.  Try again.\n"
 	
 	
 # This is where the user inputs the value for the velocity	
@@ -66,8 +53,7 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 	while question2 == True:
 		num_check_loop = True
 		while num_check_loop == True:
-			print "Enter your speed in %s (the speed of light in a vacuum is %s %s): " % (unit_velocity, c, unit_velocity)
-			speed = raw_input("> ")
+			speed = raw_input("Enter your speed in %s (the speed of light in a vacuum is %s %s)\n> " % (unit_velocity, c, unit_velocity))
 			num_check = True
 			number_check(speed)
 			if num_check == True:
@@ -76,64 +62,72 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 # This verifies that the number entered is valid
 		velocity = Decimal(speed)
 		if velocity > c:
-			print "You are moving faster than light! This is impossible.  Try again."
+			print "You are moving faster than light! This is impossible.  Try again.\n"
 		elif velocity == c:
-			print "You are travelling at exactly the speed of light, this is not allowed."
+			print "You are travelling at exactly the speed of light, this is not allowed.\n"
 		elif velocity <= 0:
-			print "You need to be in foward motion."
+			print "You need to be in foward motion.\n"
 		else:
 			question2 = False
-			print "Ok"
+			print "Ok\n"
 
 
 # This is where the user inputs the value for the mass	
-	weight = raw_input("Enter your mass (let's approximate to your weight, in lbs): ")
-
-	number_check(weight)
-
-	mass = Decimal(weight)
+	question3 = True
+	while question3 == True:
+		num_check_loop = True
+		while num_check_loop == True:
+			weight = raw_input("Enter your mass (let's approximate to your weight, in lbs):\n> ")
+			num_check = True
+			number_check(weight)
+			if num_check == True:
+				num_check_loop = False
 
 # This verifies that the number entered is valid
-	if mass <= 0:
-		exit = raw_input("You should weigh something. Press Enter.")
-		exit == quit()
-	elif mass > 500:
-		answer1 = raw_input("Are you sure you weigh that much? ").lower()
-		if answer1 == "yes" or answer1 == "y":
-			print "Ok"
-		elif answer1 == "no" or answer1 == "n":
-			exit = raw_input("I thought so.  Press Enter.")
-			exit == quit()
+		mass = Decimal(weight)
+		if mass <= 0:
+			print "You should weigh something. Try again.\n"
+		elif mass > 500:
+			answer1 = raw_input("Are you sure you weigh that much? (y/n)\n> ").lower()
+			if answer1[:1] == "y":
+				question3 = False
+				print "Ok\n"
+			elif answer1[:1] == "n":
+				print "I thought so.  Try again.\n"
+			else:
+				print "Unrecognized input.  Try again.\n"
 		else:
-			exit = raw_input("Unrecognized input.  Press Enter.")
-			exit == quit()
-	else:
-		print "Ok"
+			question3 = False
+			print "Ok\n"
 
 	
 # This is where the user inputs the value for the length
-	height = raw_input("Enter your height in inches: ")
-
-	number_check(height)
-
-	length = Decimal(height)
+	question4 = True
+	while question4 == True:
+		num_check_loop = True
+		while num_check_loop == True:
+			height = raw_input("Enter your height in inches:\n> ")
+			num_check = True
+			number_check(height)
+			if num_check == True:
+				num_check_loop = False
 
 # This verifies that the number entered is valid
-	if length <= 0:
-		exit = raw_input("You should be taller than 0 inches.  Press Enter.")
-		exit == quit()
-	elif length > 100:
-		answer2 = raw_input("Are you sure you are that tall? ").lower()
-		if answer2 == "yes" or answer2 == "y":
-			print "Ok"
-		elif answer2 == "no" or answer2 == "n":
-			exit = raw_input("Try again then.  Press Enter.")
-			exit == quit()
+		length = Decimal(height)
+		if length <= 0:
+			print "You should be taller than 0 inches.  Try again.\n"
+		elif length > 100:
+			answer2 = raw_input("Are you sure you are that tall? (y/n)\n>").lower()
+			if answer2[:1] == "y":
+				question4 = False
+				print "Ok\n"
+			elif answer2[:1] == "n":
+				print "Try again then.\n"
+			else:
+				print "Unrecognized input."
 		else:
-			exit = raw_input("Unrecognized input.  Press Enter.")
-			exit == quit()
-	else:
-		print "Ok"
+			question4 = False
+			print "Ok\n"
 
 	
 # This is to calculate the Lorentz factor
@@ -141,8 +135,7 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 
 # This verifies that there are changes to report
 	if (mass * gamma) == mass and (length / gamma) == length and (1 * gamma) == 1:
-		exit = raw_input("You're not moving fast enough to display changes.  Try again with a higher value.  Press Enter.")
-		exit == quit()
+		print "\nYou're not moving fast enough to display changes.\n"
 	else:
 
 # This displays the results
@@ -160,5 +153,5 @@ If you travel lying down in the direction of movement, to someone not moving you
 		print "Ok"
 	else:
 		program = False
-		exit = raw_input("Thank you for using this program by Simon Lachaine.")
+		exit = raw_input("\nThank you for using this program by Simon Lachaine.\n")
 		exit == quit()
