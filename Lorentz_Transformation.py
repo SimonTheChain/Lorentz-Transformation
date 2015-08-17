@@ -53,7 +53,7 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 	while question2 == True:
 		num_check_loop = True
 		while num_check_loop == True:
-			speed = raw_input("Enter your speed in %s (the speed of light in a vacuum is %s %s)\n> " % (unit_velocity, c, unit_velocity))
+			speed = raw_input("\nEnter your speed in %s (the speed of light in a vacuum is %s %s)\n> " % (unit_velocity, c, unit_velocity))
 			num_check = True
 			number_check(speed)
 			if num_check == True:
@@ -147,11 +147,10 @@ If you travel lying down in the direction of movement, to someone not moving you
 """ % ((mass * gamma), (length / gamma), (1 * gamma))
 
 # This asks to run the script again
-	print "Do you want to enter new values? (Yes/No)"
-	rerun = raw_input("> ").lower()
-	if rerun == "yes" or rerun == "y":
+	print 
+	rerun = raw_input("Do you want to enter new values? (y/n)\n> ").lower()
+	if rerun == "y":
 		print "Ok"
 	else:
 		program = False
-		exit = raw_input("\nThank you for using this program by Simon Lachaine.\n")
-		exit == quit()
+		quit(raw_input("\nThank you for using this program by Simon Lachaine.\n"))
