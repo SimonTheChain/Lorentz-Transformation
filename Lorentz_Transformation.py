@@ -13,17 +13,24 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 
 
 # This function verifies that a number was entered
-	def number_check(x):
-		try:
-			int(x)
-		except ValueError:
+	def number_check_loop(x, y):
+		num_check_loop = True
+		while num_check_loop == True:				
+			x = raw_input(y)	
+			num_check = True
 			try:
-				float(x)
+				int(x)
 			except ValueError:
-				print "This is not a number.  Try again.\n"
-				global num_check
-				num_check = False
-
+				try:
+					float(x)
+				except ValueError:
+					print "This is not a number.  Try again.\n"
+					num_check = False
+			global z
+			z = x
+			if num_check == True:
+				num_check_loop = False
+				
 				
 # This is where the user selects the units to be used
 	question1 = True
@@ -51,13 +58,9 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 # This is where the user inputs the value for the velocity	
 	question2 = True
 	while question2 == True:
-		num_check_loop = True
-		while num_check_loop == True:
-			speed = raw_input("\nEnter your speed in %s (the speed of light in a vacuum is %s %s)\n> " % (unit_velocity, c, unit_velocity))
-			num_check = True
-			number_check(speed)
-			if num_check == True:
-				num_check_loop = False
+		speed = 0
+		number_check_loop(speed, "\nEnter your speed in %s (the speed of light in a vacuum is %s %s)\n> " % (unit_velocity, c, unit_velocity))
+		speed = z
 
 # This verifies that the number entered is valid
 		velocity = Decimal(speed)
@@ -75,13 +78,9 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 # This is where the user inputs the value for the mass	
 	question3 = True
 	while question3 == True:
-		num_check_loop = True
-		while num_check_loop == True:
-			weight = raw_input("Enter your mass (let's approximate to your weight, in lbs):\n> ")
-			num_check = True
-			number_check(weight)
-			if num_check == True:
-				num_check_loop = False
+		weight = 0
+		number_check_loop(weight, "Enter your mass (let's approximate to your weight, in lbs):\n> ")
+		weight = z
 
 # This verifies that the number entered is valid
 		mass = Decimal(weight)
@@ -104,13 +103,9 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 # This is where the user inputs the value for the length
 	question4 = True
 	while question4 == True:
-		num_check_loop = True
-		while num_check_loop == True:
-			height = raw_input("Enter your height in inches:\n> ")
-			num_check = True
-			number_check(height)
-			if num_check == True:
-				num_check_loop = False
+		height = 0
+		number_check_loop(height, "Enter your height in inches:\n> ")
+		height = z
 
 # This verifies that the number entered is valid
 		length = Decimal(height)
