@@ -1,4 +1,5 @@
-# These modules are needed to do the square root operation and to display the results with precision
+# These modules are needed to do the square root operation
+# and to display the results with precision
 from math import sqrt
 from decimal import Decimal
 
@@ -22,7 +23,8 @@ def number_check_loop(x, y):
 			num_check_loop = False
 
 # This function asks a question and verifies the input
-def question_loop(question_number, weight_or_height, text, mass_or_length, text_zero, value_high, text_high):	
+def question_loop(question_number, weight_or_height, text, \
+mass_or_length, text_zero, value_high, text_high):	
 	question_number = True
 	while question_number == True:
 		weight_or_height = 0
@@ -83,7 +85,8 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 	question2 = True
 	while question2 == True:
 		speed = 0
-		number_check_loop(speed, "\nEnter your speed in %s (the speed of light in a vacuum is %s %s)\n> " % (unit_velocity, c, unit_velocity))
+		number_check_loop(speed, "\nEnter your speed in %s (the speed of light in a vacuum is %s %s)\n> " \
+		% (unit_velocity, c, unit_velocity))
 		speed = z
 
 # This verifies that the number entered is valid
@@ -101,12 +104,14 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 
 # This is where the user inputs the value for the mass	
 	question3, weight, mass = 0, 0, 0
-	question_loop(question3, weight, "Enter your mass (let's approximate to your weight, in lbs):\n> ", mass, "You should weigh something. Try again.\n", 500, "Are you sure you weigh that much? (y/n)\n> ")
+	question_loop(question3, weight, "Enter your mass (let's approximate to your weight, in lbs):\n> ", \
+	mass, "You should weigh something. Try again.\n", 500, "Are you sure you weigh that much? (y/n)\n> ")
 	
 	
 # This is where the user inputs the value for the length
 	question4, height, length = 0, 0, 0
-	question_loop(question4, height, "Enter your height in inches:\n> ", length, "You should be taller than 0 inches.  Try again.\n", 100, "Are you sure you are that tall? (y/n)\n>")
+	question_loop(question4, height, "Enter your height in inches:\n> ", length, \
+	"You should be taller than 0 inches.  Try again.\n", 100, "Are you sure you are that tall? (y/n)\n>")
 
 	
 # This is to calculate the Lorentz factor
