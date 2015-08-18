@@ -20,6 +20,29 @@ def number_check_loop(x, y):
 		z = x
 		if num_check == True:
 			num_check_loop = False
+
+# This function asks a question and verifies the input
+def question_loop(question_number, weight_or_height, text, mass_or_length, text_zero, value_high, text_high):	
+	question_number = True
+	while question_number == True:
+		weight_or_height = 0
+		number_check_loop(weight_or_height, text)
+		weight_or_height = z
+		mass_or_length = Decimal(weight_or_height)
+		if mass_or_length <= 0:
+			print text_zero
+		elif mass_or_length > value_high:
+			answer1 = raw_input(text_high).lower()
+			if answer1[:1] == "y":
+				question_number = False
+				print "Ok\n"
+			elif answer1[:1] == "n":
+				print "Try again then.\n"
+			else:
+				print "Unrecognized input.  Try again.\n"
+		else:
+			question_number = False
+			print "Ok\n"
 			
 # This sets the loop for the whole script
 program = True
@@ -77,53 +100,13 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 
 
 # This is where the user inputs the value for the mass	
-	question3 = True
-	while question3 == True:
-		weight = 0
-		number_check_loop(weight, "Enter your mass (let's approximate to your weight, in lbs):\n> ")
-		weight = z
-
-# This verifies that the number entered is valid
-		mass = Decimal(weight)
-		if mass <= 0:
-			print "You should weigh something. Try again.\n"
-		elif mass > 500:
-			answer1 = raw_input("Are you sure you weigh that much? (y/n)\n> ").lower()
-			if answer1[:1] == "y":
-				question3 = False
-				print "Ok\n"
-			elif answer1[:1] == "n":
-				print "I thought so.  Try again.\n"
-			else:
-				print "Unrecognized input.  Try again.\n"
-		else:
-			question3 = False
-			print "Ok\n"
-
+	question3, weight, mass = 0, 0, 0
+	question_loop(question3, weight, "Enter your mass (let's approximate to your weight, in lbs):\n> ", mass, "You should weigh something. Try again.\n", 500, "Are you sure you weigh that much? (y/n)\n> ")
+	
 	
 # This is where the user inputs the value for the length
-	question4 = True
-	while question4 == True:
-		height = 0
-		number_check_loop(height, "Enter your height in inches:\n> ")
-		height = z
-
-# This verifies that the number entered is valid
-		length = Decimal(height)
-		if length <= 0:
-			print "You should be taller than 0 inches.  Try again.\n"
-		elif length > 100:
-			answer2 = raw_input("Are you sure you are that tall? (y/n)\n>").lower()
-			if answer2[:1] == "y":
-				question4 = False
-				print "Ok\n"
-			elif answer2[:1] == "n":
-				print "Try again then.\n"
-			else:
-				print "Unrecognized input."
-		else:
-			question4 = False
-			print "Ok\n"
+	question4, height, length = 0, 0, 0
+	question_loop(question4, height, "Enter your height in inches:\n> ", length, "You should be taller than 0 inches.  Try again.\n", 100, "Are you sure you are that tall? (y/n)\n>")
 
 	
 # This is to calculate the Lorentz factor
