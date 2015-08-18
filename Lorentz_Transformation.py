@@ -44,6 +44,8 @@ mass_or_length, text_zero, value_high, text_high):
 				print "Unrecognized input.  Try again.\n"
 		else:
 			question_number = False
+			global zz
+			zz = mass_or_length
 			print "Ok\n"
 			
 # This sets the loop for the whole script
@@ -106,12 +108,14 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 	question3, weight, mass = 0, 0, 0
 	question_loop(question3, weight, "Enter your mass (let's approximate to your weight, in lbs):\n> ", \
 	mass, "You should weigh something. Try again.\n", 500, "Are you sure you weigh that much? (y/n)\n> ")
-	
+	mass = zz
+
 	
 # This is where the user inputs the value for the length
 	question4, height, length = 0, 0, 0
 	question_loop(question4, height, "Enter your height in inches:\n> ", length, \
 	"You should be taller than 0 inches.  Try again.\n", 100, "Are you sure you are that tall? (y/n)\n>")
+	length = zz
 
 	
 # This is to calculate the Lorentz factor
