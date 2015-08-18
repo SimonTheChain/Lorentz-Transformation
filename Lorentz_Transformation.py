@@ -2,36 +2,37 @@
 from math import sqrt
 from decimal import Decimal
 
+# This function verifies that a number was entered
+def number_check_loop(x, y):
+	num_check_loop = True
+	while num_check_loop == True:				
+		x = raw_input(y)	
+		num_check = True
+		try:
+			int(x)
+		except ValueError:
+			try:
+				float(x)
+			except ValueError:
+				print "This is not a number.  Try again.\n"
+				num_check = False
+		global z
+		z = x
+		if num_check == True:
+			num_check_loop = False
+			
 # This sets the loop for the whole script
 program = True
 while program == True:
 
+				
 
 	print """
 This will calculate some of the effects of Einstein's Theory of Special Relativity.
 """
 
 
-# This function verifies that a number was entered
-	def number_check_loop(x, y):
-		num_check_loop = True
-		while num_check_loop == True:				
-			x = raw_input(y)	
-			num_check = True
-			try:
-				int(x)
-			except ValueError:
-				try:
-					float(x)
-				except ValueError:
-					print "This is not a number.  Try again.\n"
-					num_check = False
-			global z
-			z = x
-			if num_check == True:
-				num_check_loop = False
-				
-				
+
 # This is where the user selects the units to be used
 	question1 = True
 	while question1 == True:
@@ -65,11 +66,11 @@ This will calculate some of the effects of Einstein's Theory of Special Relativi
 # This verifies that the number entered is valid
 		velocity = Decimal(speed)
 		if velocity > c:
-			print "You are moving faster than light! This is impossible.  Try again.\n"
+			print "\nYou are moving faster than light! This is impossible.  Try again."
 		elif velocity == c:
-			print "You are travelling at exactly the speed of light, this is not allowed.\n"
+			print "\nYou are travelling at exactly the speed of light, this is not allowed."
 		elif velocity <= 0:
-			print "You need to be in foward motion.\n"
+			print "\nYou need to be in foward motion."
 		else:
 			question2 = False
 			print "Ok\n"
@@ -142,10 +143,16 @@ If you travel lying down in the direction of movement, to someone not moving you
 """ % ((mass * gamma), (length / gamma), (1 * gamma))
 
 # This asks to run the script again
-	print 
-	rerun = raw_input("Do you want to enter new values? (y/n)\n> ").lower()
-	if rerun == "y":
-		print "Ok"
-	else:
-		program = False
-		quit(raw_input("\nThank you for using this program by Simon Lachaine.\n"))
+	exit_question = True
+	while exit_question == True:
+		rerun = raw_input("Do you want to enter new values? (y/n)\n> ").lower()
+		if rerun[:1] == "y":
+			exit_question = False
+			print "Ok"
+		elif rerun[:1] != "y" and rerun[:1] != "n":
+			print "Unrecognized input, please try again.\n"
+		else:
+			exit_question = False
+			program = False
+			raw_input("\nThank you for using this program by Simon Lachaine.\n")
+			quit()
