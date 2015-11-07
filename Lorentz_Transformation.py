@@ -1,150 +1,275 @@
-# These modules are needed to do the square root operation
-# and to display the results with precision
+# imports the modules needed
 from math import sqrt
 from decimal import Decimal
-
-# This function verifies that a number was entered
-def number_check_loop(x, y):
-	num_check_loop = True
-	while num_check_loop == True:				
-		x = raw_input(y)	
-		num_check = True
-		try:
-			int(x)
-		except ValueError:
-			try:
-				float(x)
-			except ValueError:
-				print "This is not a number.  Try again.\n"
-				num_check = False
-		global z
-		z = x
-		if num_check == True:
-			num_check_loop = False
-
-# This function asks a question and verifies the input
-def question_loop(question_number, weight_or_height, text, \
-mass_or_length, text_zero, value_high, text_high):	
-	question_number = True
-	while question_number == True:
-		weight_or_height = 0
-		number_check_loop(weight_or_height, text)
-		weight_or_height = z
-		mass_or_length = Decimal(weight_or_height)
-		if mass_or_length <= 0:
-			print text_zero
-		elif mass_or_length > value_high:
-			answer1 = raw_input(text_high).lower()
-			if answer1[:1] == "y":
-				question_number = False
-				print "Ok\n"
-			elif answer1[:1] == "n":
-				print "Try again then.\n"
-			else:
-				print "Unrecognized input.  Try again.\n"
-		else:
-			question_number = False
-			global zz
-			zz = mass_or_length
-			print "Ok\n"
-			
-# This sets the loop for the whole script
-program = True
-while program == True:
-
-				
-
-	print """
-This will calculate some of the effects of Einstein's Theory of Special Relativity.
-"""
+from Tkinter import *
 
 
+# allows creation of the app object
+class Application:
 
-# This is where the user selects the units to be used
-	question1 = True
-	while question1 == True:
-		unit_velocity = raw_input("""Select the unit to be used for speed:
-(1) Kilometers per hour (km/h)
-(2) Miles per hour (mph)
-(3) Fraction of the speed of light (ex.: 0.85c)\n> """)
-		if str(unit_velocity) == "1":
-			unit_velocity = "km/h"
-			c = Decimal(1079252848800)
-			question1 = False
-		elif str(unit_velocity) == "2":
-			unit_velocity = "mph"
-			c = Decimal(670616629)
-			question1 = False
-		elif str(unit_velocity) == "3":
-			unit_velocity = "c"
-			c = Decimal(1)
-			question1 = False
-		else:
-			print "Expected 1, 2 or 3.  Try again.\n"
-	
-	
-# This is where the user inputs the value for the velocity	
-	question2 = True
-	while question2 == True:
-		speed = 0
-		number_check_loop(speed, "\nEnter your speed in %s (the speed of light in a vacuum is %s %s)\n> " \
-		% (unit_velocity, c, unit_velocity))
-		speed = z
+    def __init__(self, master):
+        """initializes the app"""
+        self.master = master
+        self.c = 0
+        self.max_mass = 0
+        self.max_length = 0
 
-# This verifies that the number entered is valid
-		velocity = Decimal(speed)
-		if velocity > c:
-			print "\nYou are moving faster than light! This is impossible.  Try again."
-		elif velocity == c:
-			print "\nYou are travelling at exactly the speed of light, this is not allowed."
-		elif velocity <= 0:
-			print "\nYou need to be in foward motion."
-		else:
-			question2 = False
-			print "Ok\n"
+        master.title("Lorentz Transformation")
+
+        # creates menus
+        menu1 = Menu(master)
+        master.config(menu=menu1)
+        submenu1 = Menu(menu1)
+        menu1.add_cascade(label="About",
+                          menu=submenu1)
+        submenu1.add_command(label="About the Lorentz Transformation...",
+                             command=self.text_factor)
+        submenu1.add_command(label="About this Program...",
+                             command=self.text_program)
+        submenu1.add_separator()
+        submenu1.add_command(label="Exit",
+                             command=self.goodbye)
+
+        # creates frames for the widgets
+        self.frame1 = Frame(master)
+        self.frame2 = Frame(master)
+        self.frame3 = Frame(master)
+        self.frame4 = Frame(master, pady=20)
+        self.frame5 = Frame(master)
+        self.frame6 = LabelFrame(master)
+        for x in range(2):
+            self.frame6.columnconfigure(x, weight=1)
+        for y in range(3):
+            self.frame6.rowconfigure(x, weight=1)
+        self.frame5.grid(row=0, column=1)
+        self.frame1.grid(row=1, column=0)
+        self.frame2.grid(row=1, column=1)
+        self.frame3.grid(row=1, column=2)
+        self.frame4.grid(row=2, column=1)
+        self.frame6.grid(row=3, column=0, columnspan=3, sticky=N+S+E+W)
+
+        # selection of units for velocity
+        self.unit_velocity = StringVar()
+        label_unit_velocity = Label(self.frame1,
+                                    text="Select the unit to be used for velocity:",
+                                    pady=6).pack()
+        radio1 = Radiobutton(self.frame1,
+                             text="Kilometers per second",
+                             variable=self.unit_velocity,
+                             value="km/s",
+                             indicatoron=0,
+                             command=self.c_value).pack()
+        radio2 = Radiobutton(self.frame1,
+                             text="Miles per second",
+                             variable=self.unit_velocity,
+                             value="mile/s",
+                             indicatoron=0,
+                             command=self.c_value).pack()
+
+        self.speed_text = StringVar()
+        self.speed_text.set("\n")
+        label_speed = Label(self.frame1,
+                            width= 50,
+                            textvariable=self.speed_text).pack()
+
+        # selection of units for mass
+        self.unit_mass = StringVar()
+        label_unit_mass = Label(self.frame2,
+                                text="Select the unit to be used for mass:",
+                                pady=6).pack()
+        radio3 = Radiobutton(self.frame2,
+                             text="Pounds",
+                             variable=self.unit_mass,
+                             value="lbs",
+                             indicatoron=0,
+                             command=self.mass_entry).pack()
+        radio4 = Radiobutton(self.frame2,
+                             text="Kilograms",
+                             variable=self.unit_mass,
+                             value="kg",
+                             indicatoron=0,
+                             command=self.mass_entry).pack()
+
+        self.mass_text = StringVar()
+        self.mass_text.set("\n")
+        label_mass = Label(self.frame2,
+                           width= 50,
+                           textvariable=self.mass_text).pack()
+
+        # selection of units for length
+        self.unit_length = StringVar()
+        label_unit_length = Label(self.frame3,
+                                    text="Select the unit to be used for length:",
+                                    pady=6).pack()
+        radio5 = Radiobutton(self.frame3,
+                             text="Centimeters",
+                             variable=self.unit_length,
+                             value="cm",
+                             indicatoron=0,
+                             command=self.length_entry).pack()
+        radio6 = Radiobutton(self.frame3,
+                             text="Inches",
+                             variable=self.unit_length,
+                             value="inches",
+                             indicatoron=0,
+                             command=self.length_entry).pack()
+
+        self.length_text = StringVar()
+        self.length_text.set("\n")
+        label_length = Label(self.frame3,
+                             width= 50,
+                             textvariable=self.length_text).pack()
+
+        # creates the process button
+        process_button = Button(self.frame4,
+                                text="Process",
+                                fg="white",
+                                bg="black",
+                                relief=RAISED,
+                                command=self.process).pack()
+
+        # creates the sliders
+        self.speed = IntVar()
+        self.entry_speed = Scale(self.frame1,
+                                 from_=1,
+                                 to=self.c,
+                                 length=300,
+                                 orient=HORIZONTAL,
+                                 variable=self.speed)
+        self.entry_speed.pack()
+
+        self.mass = IntVar()
+        self.entry_mass = Scale(self.frame2,
+                                from_=1,
+                                to=self.max_mass,
+                                length=300,
+                                orient=HORIZONTAL,
+                                variable=self.mass)
+        self.entry_mass.pack()
+
+        self.length = IntVar()
+        self.entry_length = Scale(self.frame3,
+                                  from_=1,
+                                  to=self.max_length,
+                                  length=300,
+                                  orient=HORIZONTAL,
+                                  variable=self.length)
+        self.entry_length.pack()
+
+        # displays the results
+        self.text_results = StringVar()
+        self.label_results = Label(self.frame6,
+                                   padx=20,
+                                   pady=20,
+                                   justify=CENTER,
+                                   textvariable=self.text_results)
+        self.label_results.pack(fill=X)
+
+    def c_value(self):
+        """adjusts the value of c"""
+        if self.unit_velocity.get() == "km/s":
+            self.c = Decimal(299792458)
+        elif self.unit_velocity.get() == "mile/s":
+            self.c = Decimal(186282)
+        self.speed_text.set("\nEnter your speed in %s"
+                            % (self.unit_velocity.get()))
+        self.entry_speed.config(to=self.c)
+        return self.c
+
+    def mass_entry(self):
+        """adjusts the max value for mass"""
+        if self.unit_mass.get() == "kg":
+            self.max_mass = 225
+        elif self.unit_mass.get() == "lbs":
+            self.max_mass = 500
+        self.mass_text.set("\nEnter your weight in %s"
+                           % (self.unit_mass.get()))
+        self.entry_mass.config(to=self.max_mass)
+        return self.max_mass
+
+    def length_entry(self):
+        """adjusts the max value for length"""
+        if self.unit_length.get() == "cm":
+            self.max_length = 215
+        elif self.unit_length.get() == "inches":
+            self.max_length = 84
+        self.length_text.set("\nEnter your height in %s"
+                             % (self.unit_length.get()))
+        self.entry_length.config(to=self.max_length)
+        return self.max_length
+
+    def process(self):
+        """calculates the results"""
+        if self.c == 0 or self.max_mass == 0 or self.max_length == 0:
+            self.text_results.set("Please select units for all categories.")
+            self.label_results.config(bg="red")
+        else:
+            try:
+                gamma = Decimal(1 / Decimal(sqrt(1 - ((self.speed.get() / self.c) ** 2))))
+                if (self.mass.get() * gamma) == self.mass.get() \
+                        and (self.length.get() / gamma) == self.length.get() \
+                        and (1 * gamma) == 1:
+                    self.text_results.set("You're not moving fast enough to display changes.")
+                    self.label_results.config(bg="red")
+                else:
+                    self.text_results.set("""According to Special Relativity:
+                    Your mass is now %s %s;
+                    If you travel lying down in the direction of movement,
+                    to someone not moving your height is now %s %s;
+                    1 year to you is %s years to someone not moving."""
+                                          % ((self.mass.get() * gamma),
+                                             self.unit_mass.get(),
+                                             (self.length.get() / gamma),
+                                             self.unit_length.get(),
+                                             (1 * gamma)))
+                    self.label_results.config(bg="white")
+            except ZeroDivisionError:
+                self.text_results.set("Speed too close to the speed of light, does not compute.")
+                self.label_results.config(bg="red")
+
+    def goodbye(self):
+        """exits the program"""
+        quit()
+
+    def text_factor(self):
+        """displays the lorentz factor info window"""
+        factor_window = Toplevel()
+        factor_window.title("About the Lorentz Transformation")
+        text_factor = """The transformations describe how measurements related to events
+        in space and time by two observers, in inertial frames moving at constant velocity
+        with respect to each other, are related. They reflect the fact that observers moving
+        at different velocities may measure different distances, elapsed times,
+        and even different orderings of events. (Wikipedia)"""
+        msg_factor = Message(factor_window,
+                             justify=CENTER,
+                             padx=20,
+                             pady=20,
+                             text=text_factor)
+        msg_factor.pack()
+        button_factor = Button(factor_window,
+                               text="Close",
+                               command=factor_window.destroy).pack()
+
+    def text_program(self):
+        """displays the program info window"""
+        program_window = Toplevel()
+        program_window.title("About this Program")
+        text_program = """This program calculates some of the effects of Einstein's Theory of Special Relativity.
+          It was written in Python 2 in November 2015 by Simon Lachaine."""
+        msg_program = Message(program_window,
+                              justify=CENTER,
+                              padx=20,
+                              pady=20,
+                              text=text_program)
+        msg_program.pack()
+        button_program = Button(program_window, text="Close", command=program_window.destroy).pack()
 
 
-# This is where the user inputs the value for the mass	
-	question3, weight, mass = 0, 0, 0
-	question_loop(question3, weight, "Enter your mass (let's approximate to your weight, in lbs):\n> ", \
-	mass, "You should weigh something. Try again.\n", 500, "Are you sure you weigh that much? (y/n)\n> ")
-	mass = zz
+def __main__():
+    """main program"""
+    root = Tk()
+    app = Application(root)
+    root.mainloop()
 
-	
-# This is where the user inputs the value for the length
-	question4, height, length = 0, 0, 0
-	question_loop(question4, height, "Enter your height in inches:\n> ", length, \
-	"You should be taller than 0 inches.  Try again.\n", 100, "Are you sure you are that tall? (y/n)\n>")
-	length = zz
-
-	
-# This is to calculate the Lorentz factor
-	gamma = Decimal(1 / Decimal(sqrt(1 - ((velocity / c) ** 2))))
-
-# This verifies that there are changes to report
-	if (mass * gamma) == mass and (length / gamma) == length and (1 * gamma) == 1:
-		print "\nYou're not moving fast enough to display changes.\n"
-	else:
-
-# This displays the results
-		print """
-According to Special Relativity:
-Your mass is now %s lbs;
-If you travel lying down in the direction of movement, to someone not moving your height is now %s inches;
-1 year to you is %s years to someone not moving.
-""" % ((mass * gamma), (length / gamma), (1 * gamma))
-
-# This asks to run the script again
-	exit_question = True
-	while exit_question == True:
-		rerun = raw_input("Do you want to enter new values? (y/n)\n> ").lower()
-		if rerun[:1] == "y":
-			exit_question = False
-			print "Ok"
-		elif rerun[:1] != "y" and rerun[:1] != "n":
-			print "Unrecognized input, please try again.\n"
-		else:
-			exit_question = False
-			program = False
-			raw_input("\nThank you for using this program by Simon Lachaine.\n")
-			quit()
+if __name__ == __main__():
+    __main__()
