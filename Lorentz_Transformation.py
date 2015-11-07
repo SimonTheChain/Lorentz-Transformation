@@ -6,7 +6,6 @@ from Tkinter import *
 
 # allows creation of the app object
 class Application:
-
     def __init__(self, master):
         """initializes the app"""
         self.master = master
@@ -28,7 +27,7 @@ class Application:
                              command=self.text_program)
         submenu1.add_separator()
         submenu1.add_command(label="Exit",
-                             command=self.goodbye)
+                             command=self.master.quit)
 
         # creates frames for the widgets
         self.frame1 = Frame(master)
@@ -46,7 +45,7 @@ class Application:
         self.frame3.grid(row=1, column=2)
         self.frame4.grid(row=2, column=1)
         self.frame5.grid(row=0, column=1)
-        self.frame6.grid(row=3, column=0, columnspan=3, sticky=N+S+E+W)
+        self.frame6.grid(row=3, column=0, columnspan=3, sticky=N + S + E + W)
 
         # selection of units for velocity
         self.unit_velocity = StringVar()
@@ -69,7 +68,7 @@ class Application:
         self.speed_text = StringVar()
         self.speed_text.set("\n")
         label_speed = Label(self.frame1,
-                            width= 50,
+                            width=50,
                             textvariable=self.speed_text).pack()
 
         # selection of units for mass
@@ -78,29 +77,29 @@ class Application:
                                 text="Select the unit to be used for mass:",
                                 pady=6).pack()
         radio3 = Radiobutton(self.frame2,
-                             text="Pounds",
-                             variable=self.unit_mass,
-                             value="lbs",
-                             indicatoron=0,
-                             command=self.mass_entry).pack()
-        radio4 = Radiobutton(self.frame2,
                              text="Kilograms",
                              variable=self.unit_mass,
                              value="kg",
+                             indicatoron=0,
+                             command=self.mass_entry).pack()
+        radio4 = Radiobutton(self.frame2,
+                             text="Pounds",
+                             variable=self.unit_mass,
+                             value="lbs",
                              indicatoron=0,
                              command=self.mass_entry).pack()
 
         self.mass_text = StringVar()
         self.mass_text.set("\n")
         label_mass = Label(self.frame2,
-                           width= 50,
+                           width=50,
                            textvariable=self.mass_text).pack()
 
         # selection of units for length
         self.unit_length = StringVar()
         label_unit_length = Label(self.frame3,
-                                    text="Select the unit to be used for length:",
-                                    pady=6).pack()
+                                  text="Select the unit to be used for length:",
+                                  pady=6).pack()
         radio5 = Radiobutton(self.frame3,
                              text="Centimeters",
                              variable=self.unit_length,
@@ -117,7 +116,7 @@ class Application:
         self.length_text = StringVar()
         self.length_text.set("\n")
         label_length = Label(self.frame3,
-                             width= 50,
+                             width=50,
                              textvariable=self.length_text).pack()
 
         # creates the process button
@@ -201,6 +200,10 @@ class Application:
         self.entry_length.config(to=self.max_length, state=NORMAL)
         return self.max_length
 
+    def percent(self):
+        percent_speed = ((self.speed / self.c) * 100)
+        return percent_speed
+
     def process(self):
         """calculates the results"""
         if self.c == 1 or self.max_mass == 1 or self.max_length == 1:
@@ -215,12 +218,15 @@ class Application:
                     self.text_results.set("You're not moving fast enough to display changes.")
                     self.label_results.config(bg="red")
                 else:
-                    self.text_results.set("""According to Special Relativity:
+                    self.text_results.set("""
+                    You are travelling at %s percent the speed of light.
+                    According to Special Relativity:
                     Your mass is now %s %s;
                     If you travel lying down in the direction of movement,
                     to someone not moving your height is now %s %s;
                     1 year to you is %s years to someone not moving."""
-                                          % ((self.mass.get() * gamma),
+                                          % (float("{0:.2f}".format((self.speed.get() / self.c) * 100)),
+                                             (self.mass.get() * gamma),
                                              self.unit_mass.get(),
                                              (self.length.get() / gamma),
                                              self.unit_length.get(),
@@ -229,10 +235,6 @@ class Application:
             except ZeroDivisionError:
                 self.text_results.set("Speed too close to the speed of light, does not compute.")
                 self.label_results.config(bg="red")
-
-    def goodbye(self):
-        """exits the program"""
-        self.master.quit()
 
     def text_factor(self):
         """displays the lorentz factor info window"""
@@ -273,6 +275,7 @@ def __main__():
     root = Tk()
     app = Application(root)
     root.mainloop()
+
 
 if __name__ == __main__():
     __main__()
