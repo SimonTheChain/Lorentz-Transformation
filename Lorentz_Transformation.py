@@ -10,9 +10,9 @@ class Application:
     def __init__(self, master):
         """initializes the app"""
         self.master = master
-        self.c = 0
-        self.max_mass = 0
-        self.max_length = 0
+        self.c = 1
+        self.max_mass = 1
+        self.max_length = 1
 
         master.title("Lorentz Transformation")
 
@@ -40,12 +40,12 @@ class Application:
         for x in range(2):
             self.frame6.columnconfigure(x, weight=1)
         for y in range(3):
-            self.frame6.rowconfigure(x, weight=1)
-        self.frame5.grid(row=0, column=1)
+            self.frame6.rowconfigure(y, weight=1)
         self.frame1.grid(row=1, column=0)
         self.frame2.grid(row=1, column=1)
         self.frame3.grid(row=1, column=2)
         self.frame4.grid(row=2, column=1)
+        self.frame5.grid(row=0, column=1)
         self.frame6.grid(row=3, column=0, columnspan=3, sticky=N+S+E+W)
 
         # selection of units for velocity
@@ -135,7 +135,8 @@ class Application:
                                  to=self.c,
                                  length=300,
                                  orient=HORIZONTAL,
-                                 variable=self.speed)
+                                 variable=self.speed,
+                                 state=DISABLED)
         self.entry_speed.pack()
 
         self.mass = IntVar()
@@ -144,7 +145,8 @@ class Application:
                                 to=self.max_mass,
                                 length=300,
                                 orient=HORIZONTAL,
-                                variable=self.mass)
+                                variable=self.mass,
+                                state=DISABLED)
         self.entry_mass.pack()
 
         self.length = IntVar()
@@ -153,7 +155,8 @@ class Application:
                                   to=self.max_length,
                                   length=300,
                                   orient=HORIZONTAL,
-                                  variable=self.length)
+                                  variable=self.length,
+                                  state=DISABLED)
         self.entry_length.pack()
 
         # displays the results
@@ -173,7 +176,7 @@ class Application:
             self.c = Decimal(186282)
         self.speed_text.set("\nEnter your speed in %s"
                             % (self.unit_velocity.get()))
-        self.entry_speed.config(to=self.c)
+        self.entry_speed.config(to=self.c, state=NORMAL)
         return self.c
 
     def mass_entry(self):
@@ -184,7 +187,7 @@ class Application:
             self.max_mass = 500
         self.mass_text.set("\nEnter your weight in %s"
                            % (self.unit_mass.get()))
-        self.entry_mass.config(to=self.max_mass)
+        self.entry_mass.config(to=self.max_mass, state=NORMAL)
         return self.max_mass
 
     def length_entry(self):
@@ -195,12 +198,12 @@ class Application:
             self.max_length = 84
         self.length_text.set("\nEnter your height in %s"
                              % (self.unit_length.get()))
-        self.entry_length.config(to=self.max_length)
+        self.entry_length.config(to=self.max_length, state=NORMAL)
         return self.max_length
 
     def process(self):
         """calculates the results"""
-        if self.c == 0 or self.max_mass == 0 or self.max_length == 0:
+        if self.c == 1 or self.max_mass == 1 or self.max_length == 1:
             self.text_results.set("Please select units for all categories.")
             self.label_results.config(bg="red")
         else:
@@ -229,7 +232,7 @@ class Application:
 
     def goodbye(self):
         """exits the program"""
-        quit()
+        self.master.quit()
 
     def text_factor(self):
         """displays the lorentz factor info window"""
