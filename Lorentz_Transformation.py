@@ -17,7 +17,7 @@ class Application:
 
         # creates menus
         menu1 = Menu(master)
-        master.config(menu=menu1)
+        master.config(menu=menu1, padx=20, pady=20)
         submenu1 = Menu(menu1)
         menu1.add_cascade(label="About",
                           menu=submenu1)
@@ -35,9 +35,9 @@ class Application:
         self.master.rowconfigure(4, minsize=150, weight=2)
         self.master.columnconfigure(0, weight=1)
         self.master.columnconfigure(2, weight=1)
-        self.frame_speed = Frame(master, padx=20)
-        self.frame_mass = Frame(master, padx=20)
-        self.frame_length = Frame(master, padx=20)
+        self.frame_speed = Frame(master)
+        self.frame_mass = Frame(master)
+        self.frame_length = Frame(master)
         self.frame_process = Frame(master, pady=20)
         self.frame_results = LabelFrame(master, bd=4, relief=SUNKEN)
         self.frame_speed.grid(row=2, column=0, columnspan=3, sticky=N + S + E + W)
