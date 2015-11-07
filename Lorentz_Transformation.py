@@ -30,35 +30,34 @@ class Application:
                              command=self.master.quit)
 
         # creates frames for the widgets
-        self.frame1 = Frame(master)
-        self.frame2 = Frame(master)
-        self.frame3 = Frame(master)
-        self.frame4 = Frame(master, pady=20)
-        self.frame5 = Frame(master)
-        self.frame6 = LabelFrame(master)
-        for x in range(2):
-            self.frame6.columnconfigure(x, weight=1)
-        for y in range(3):
-            self.frame6.rowconfigure(y, weight=1)
-        self.frame1.grid(row=1, column=0)
-        self.frame2.grid(row=1, column=1)
-        self.frame3.grid(row=1, column=2)
-        self.frame4.grid(row=2, column=1)
-        self.frame5.grid(row=0, column=1)
-        self.frame6.grid(row=3, column=0, columnspan=3, sticky=N + S + E + W)
+        for y in range(4):
+            self.master.rowconfigure(y, weight=1)
+        self.master.rowconfigure(4, minsize=150, weight=2)
+        self.master.columnconfigure(0, weight=1)
+        self.master.columnconfigure(2, weight=1)
+        self.frame_speed = Frame(master, padx=20)
+        self.frame_mass = Frame(master, padx=20)
+        self.frame_length = Frame(master, padx=20)
+        self.frame_process = Frame(master, pady=20)
+        self.frame_results = LabelFrame(master, bd=4, relief=SUNKEN)
+        self.frame_speed.grid(row=2, column=0, columnspan=3, sticky=N + S + E + W)
+        self.frame_mass.grid(row=1, column=0, sticky=N + S + E + W)
+        self.frame_length.grid(row=1, column=2, sticky=N + S + E + W)
+        self.frame_process.grid(row=3, column=0, columnspan=3, sticky=N + S + E + W)
+        self.frame_results.grid(row=4, column=0, columnspan=3, sticky=N + S + E + W)
 
         # selection of units for velocity
         self.unit_velocity = StringVar()
-        label_unit_velocity = Label(self.frame1,
-                                    text="Select the unit to be used for velocity:",
+        label_unit_velocity = Label(self.frame_speed,
+                                    text="Select the unit to be used for speed:",
                                     pady=6).pack()
-        radio1 = Radiobutton(self.frame1,
+        radio1 = Radiobutton(self.frame_speed,
                              text="Kilometers per second",
                              variable=self.unit_velocity,
                              value="km/s",
                              indicatoron=0,
                              command=self.c_value).pack()
-        radio2 = Radiobutton(self.frame1,
+        radio2 = Radiobutton(self.frame_speed,
                              text="Miles per second",
                              variable=self.unit_velocity,
                              value="mile/s",
@@ -67,22 +66,22 @@ class Application:
 
         self.speed_text = StringVar()
         self.speed_text.set("\n")
-        label_speed = Label(self.frame1,
+        label_speed = Label(self.frame_speed,
                             width=50,
                             textvariable=self.speed_text).pack()
 
         # selection of units for mass
         self.unit_mass = StringVar()
-        label_unit_mass = Label(self.frame2,
+        label_unit_mass = Label(self.frame_mass,
                                 text="Select the unit to be used for mass:",
                                 pady=6).pack()
-        radio3 = Radiobutton(self.frame2,
+        radio3 = Radiobutton(self.frame_mass,
                              text="Kilograms",
                              variable=self.unit_mass,
                              value="kg",
                              indicatoron=0,
                              command=self.mass_entry).pack()
-        radio4 = Radiobutton(self.frame2,
+        radio4 = Radiobutton(self.frame_mass,
                              text="Pounds",
                              variable=self.unit_mass,
                              value="lbs",
@@ -91,22 +90,22 @@ class Application:
 
         self.mass_text = StringVar()
         self.mass_text.set("\n")
-        label_mass = Label(self.frame2,
+        label_mass = Label(self.frame_mass,
                            width=50,
                            textvariable=self.mass_text).pack()
 
         # selection of units for length
         self.unit_length = StringVar()
-        label_unit_length = Label(self.frame3,
+        label_unit_length = Label(self.frame_length,
                                   text="Select the unit to be used for length:",
                                   pady=6).pack()
-        radio5 = Radiobutton(self.frame3,
+        radio5 = Radiobutton(self.frame_length,
                              text="Centimeters",
                              variable=self.unit_length,
                              value="cm",
                              indicatoron=0,
                              command=self.length_entry).pack()
-        radio6 = Radiobutton(self.frame3,
+        radio6 = Radiobutton(self.frame_length,
                              text="Inches",
                              variable=self.unit_length,
                              value="inches",
@@ -115,57 +114,59 @@ class Application:
 
         self.length_text = StringVar()
         self.length_text.set("\n")
-        label_length = Label(self.frame3,
+        label_length = Label(self.frame_length,
                              width=50,
                              textvariable=self.length_text).pack()
 
-        # creates the process button
-        process_button = Button(self.frame4,
-                                text="Process",
-                                fg="white",
-                                bg="black",
-                                relief=RAISED,
-                                command=self.process).pack()
-
         # creates the sliders
         self.speed = IntVar()
-        self.entry_speed = Scale(self.frame1,
+        self.entry_speed = Scale(self.frame_speed,
                                  from_=1,
                                  to=self.c,
-                                 length=300,
+                                 length=680,
+                                 sliderlength=10,
                                  orient=HORIZONTAL,
                                  variable=self.speed,
                                  state=DISABLED)
-        self.entry_speed.pack()
+        self.entry_speed.pack(fill=X)
 
         self.mass = IntVar()
-        self.entry_mass = Scale(self.frame2,
+        self.entry_mass = Scale(self.frame_mass,
                                 from_=1,
                                 to=self.max_mass,
                                 length=300,
                                 orient=HORIZONTAL,
                                 variable=self.mass,
                                 state=DISABLED)
-        self.entry_mass.pack()
+        self.entry_mass.pack(fill=X)
 
         self.length = IntVar()
-        self.entry_length = Scale(self.frame3,
+        self.entry_length = Scale(self.frame_length,
                                   from_=1,
                                   to=self.max_length,
                                   length=300,
                                   orient=HORIZONTAL,
                                   variable=self.length,
                                   state=DISABLED)
-        self.entry_length.pack()
+        self.entry_length.pack(fill=X)
+
+        # creates the process button
+        process_button = Button(self.frame_process,
+                                text="Process",
+                                fg="white",
+                                bg="black",
+                                padx=10,
+                                pady=5,
+                                relief=RAISED,
+                                command=self.process).pack()
 
         # displays the results
         self.text_results = StringVar()
-        self.label_results = Label(self.frame6,
-                                   padx=20,
+        self.label_results = Label(self.frame_results,
                                    pady=20,
                                    justify=CENTER,
                                    textvariable=self.text_results)
-        self.label_results.pack(fill=X)
+        self.label_results.pack(fill=BOTH, expand=TRUE)
 
     def c_value(self):
         """adjusts the value of c"""
@@ -201,7 +202,7 @@ class Application:
         return self.max_length
 
     def percent(self):
-        percent_speed = ((self.speed / self.c) * 100)
+        percent_speed = ((self.speed,get() / self.c) * 100)
         return percent_speed
 
     def process(self):
@@ -218,19 +219,16 @@ class Application:
                     self.text_results.set("You're not moving fast enough to display changes.")
                     self.label_results.config(bg="red")
                 else:
-                    self.text_results.set("""
-                    You are travelling at %s percent the speed of light.
-                    According to Special Relativity:
-                    Your mass is now %s %s;
-                    If you travel lying down in the direction of movement,
-                    to someone not moving your height is now %s %s;
-                    1 year to you is %s years to someone not moving."""
-                                          % (float("{0:.2f}".format((self.speed.get() / self.c) * 100)),
-                                             (self.mass.get() * gamma),
-                                             self.unit_mass.get(),
-                                             (self.length.get() / gamma),
-                                             self.unit_length.get(),
-                                             (1 * gamma)))
+                    self.text_results.set("You are travelling at %s percent the speed of light.\n"
+                                          % (format("{0:.2f}".format((self.speed.get() / self.c) * 100))) +
+                                          "According to Special Relativity:\n" +
+                                          "Your mass is now %s %s;\n"
+                                          % ((self.mass.get() * gamma), self.unit_mass.get()) +
+                                          "If you travel lying down in the direction of movement,\n" +
+                                          "to someone not moving your height is now %s %s;\n"
+                                          % ((self.length.get() / gamma), self.unit_length.get()) +
+                                          "1 year to you is %s years to someone not moving."
+                                          % (1 * gamma))
                     self.label_results.config(bg="white")
             except ZeroDivisionError:
                 self.text_results.set("Speed too close to the speed of light, does not compute.")
@@ -240,11 +238,12 @@ class Application:
         """displays the lorentz factor info window"""
         factor_window = Toplevel()
         factor_window.title("About the Lorentz Transformation")
-        text_factor = """The transformations describe how measurements related to events
-        in space and time by two observers, in inertial frames moving at constant velocity
-        with respect to each other, are related. They reflect the fact that observers moving
-        at different velocities may measure different distances, elapsed times,
-        and even different orderings of events. (Wikipedia)"""
+        text_factor = "The transformations describe how measurements related to events "\
+                      + "in space and time by two observers, in inertial frames moving "\
+                      + "at constant velocity with respect to each other, are related. "\
+                      + "They reflect the fact that observers moving at different velocities "\
+                      + "may measure different distances, elapsed times, "\
+                      + "and even different orderings of events. (Wikipedia)"
         msg_factor = Message(factor_window,
                              justify=CENTER,
                              padx=20,
@@ -259,8 +258,9 @@ class Application:
         """displays the program info window"""
         program_window = Toplevel()
         program_window.title("About this Program")
-        text_program = """This program calculates some of the effects of Einstein's Theory of Special Relativity.
-          It was written in Python 2 in November 2015 by Simon Lachaine."""
+        text_program = "This program calculates some of the effects "\
+                       + "of Einstein's Theory of Special Relativity. "\
+                       + "It was written in Python 2 in November 2015 by Simon Lachaine."
         msg_program = Message(program_window,
                               justify=CENTER,
                               padx=20,
